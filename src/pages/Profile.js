@@ -1,57 +1,64 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { Actions } from 'react-native-router-flux';
+import styled from 'styled-components/native';
+import Onboarding from 'react-native-onboarding-swiper';
 
-import {logoutUser} from "../actions/auth.actions";
+import { logoutUser } from "../actions/auth.actions";
 
-const styles = StyleSheet.create({
-  container : {
-    backgroundColor:'#455a64',
-    flex: 1,
-    alignItems:'center',
-    justifyContent :'center'
-  },
-  textStyle: {
-      color: "#fff",
-      fontSize: 18
-  },
-  button: {
-    width:300,
-    backgroundColor:'#1c313a',
-    borderRadius: 25,
-    marginVertical: 10,
-    paddingVertical: 13
-  },
-  buttonText: {
-    fontSize:16,
-    fontWeight:'500',
-    color:'#ffffff',
-    textAlign:'center'
-  },
-});
+const Avatar = styled.Image`
+	width: 300;
+	height: 300;
+	border-radius: 200;
+	border-color: #F4CB43;
+	border-width: 2;
+`;
 
 class Profile extends Component<{}> {
-
+  
+  home() {
+		Actions.home()
+	}
+  
   logoutUser = () => {
-      this.props.dispatch(logoutUser());
+    this.props.dispatch(logoutUser());
   }
 
 	render() {
     const {getUser: {userDetails}} = this.props;
 
 		return(
-			<View style={styles.container}>
-			     <Text style={styles.textStyle}>This is a profile page for {userDetails ? userDetails.name : ""}</Text>
-           <TouchableOpacity style={styles.button} onPress={this.logoutUser}>
-             <Text style={styles.buttonText}>Logout</Text>
-           </TouchableOpacity>
-			</View>
-			)
+      <Onboarding
+        showNext={false}
+        bottomBarColor={'#fff'}
+        showSkip={false}
+        onDone={() => {
+          {this.home()};
+        }}
+        controlStatusBar={false}
+        bottomBarHighlight={false}
+        pages={[
+          {
+            backgroundColor: '#fff',
+            image: <Avatar />,
+            title: `Привет, ${this.props.getUser.userDetails.person.firstname}`,
+            subtitle: 'Мы приветствуем тебя в нашем приложении для офлайн мероприятий',
+            titleStyles: { color: '#4A2481' },
+            subTitleStyles: { color: '#EA329A' }
+          },
+          {
+            backgroundColor: '#fff',
+            title: 'Приветствуем тебя!',
+            subtitle: 'Привет!',
+          },
+          {
+            backgroundColor: '#fff',
+            title: 'Начать!',
+            subtitle: "Вперед!",
+          },
+        ]}
+      />
+		)
 	}
 }
 

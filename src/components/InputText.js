@@ -10,7 +10,7 @@ const InputBox = styled.TextInput`
     color: #161F3D;
     height: 40;
     font-size: 15;
-    margin-bottom: 40;
+    margin-bottom: 10;
 `;
 
 const propTypes = {
@@ -62,6 +62,7 @@ class InputText extends Component<{}> {
         return (
             <View>
                 <InputBox
+                    autoCapitalize = 'none'
                     underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder={placeholder}
                     placeholderTextColor="#161F3D"

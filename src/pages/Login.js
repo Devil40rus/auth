@@ -32,6 +32,7 @@ const Button = styled.TouchableOpacity`
   border-radius: 5;
   margin-vertical: 10;
   padding-vertical: 13;
+  margin-top: 30
 `;
 
 const ButtonText = styled.Text`
@@ -61,11 +62,11 @@ class Login extends Component<{}> {
       }
       errorText = error.responseBody;
       Alert.alert(
-        'Ошибка входа!',
+        'Ошибка!',
         errorText,
         [
           {
-            text: 'Cancel',
+            text: 'OK',
             onPress: () => console.log('Отмена'),
             style: 'cancel',
           },
@@ -90,7 +91,7 @@ class Login extends Component<{}> {
           secureTextEntry={secureTextEntry}
           label={label}
           {...restInput} />
-      {(touched && error) && <Text style={styles.errorText}>{error}</Text>}
+      {(touched && error) && <Text>{error}</Text>}
       </View>
     );
   }

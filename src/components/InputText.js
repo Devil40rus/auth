@@ -1,6 +1,17 @@
 import PropTypes from "prop-types";
-import React, {Component} from "react";
-import {TextInput, Text, View, StyleSheet} from "react-native";
+import React, { Component } from "react";
+import { View } from "react-native";
+import styled from 'styled-components/native';
+
+const InputBox = styled.TextInput`
+    width: 270;
+    border-bottom-color: #4A2481;
+    border-bottom-width: 2;
+    color: #161F3D;
+    height: 40;
+    font-size: 15;
+    margin-bottom: 40;
+`;
 
 const propTypes = {
     mapElement: PropTypes.func,
@@ -26,19 +37,6 @@ const defaultProps = {
     label: ""
 };
 
-const styles = StyleSheet.create({
-  inputBox: {
-    width:300,
-    backgroundColor:'rgba(255, 255,255,0.2)',
-    borderRadius: 25,
-    paddingHorizontal:16,
-    fontSize:16,
-    color:'#ffffff',
-    marginVertical: 10
-  }
-
-});
-
 class InputText extends Component<{}> {
 
     state = {
@@ -60,14 +58,13 @@ class InputText extends Component<{}> {
     }
 
     render() {
-        const {placeholder, secureTextEntry, keyboardType, maxLength, value, onChangeText, onSubmitEditing} = this.props;
+        const {placeholder, secureTextEntry, keyboardType, maxLength, onSubmitEditing} = this.props;
         return (
             <View>
-                <TextInput
-                    style={styles.inputBox}
+                <InputBox
                     underlineColorAndroid="rgba(0,0,0,0)"
                     placeholder={placeholder}
-                    placeholderTextColor="rgba(255,255,255,0.8)"
+                    placeholderTextColor="#161F3D"
                     selectionColor="#999999"
                     secureTextEntry={secureTextEntry}
                     keyboardType={keyboardType}
@@ -75,7 +72,8 @@ class InputText extends Component<{}> {
                     returnKeyType="next"
                     value={this.state.value}
                     onSubmitEditing={onSubmitEditing}
-                    onChangeText={this.onChangeText} />
+                    onChangeText={this.onChangeText}
+                />
             </View>
         );
     }

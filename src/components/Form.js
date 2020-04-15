@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native';
+import styled from 'styled-components/native';
 
 export default class Logo extends Component<{}> {
 

@@ -13,8 +13,11 @@ export const api = async (url, method, body = null, headers = {}) => {
       }
 
       if(reqBody) {
-          fetchParams.headers["Content-type"] = "application/json";
-          fetchParams.headers["X-Auth-Token"] = "YWt1Y2hpbkBtYXh1cy5ydToxODA1QW5uOQ==";
+          fetchParams.headers = {
+            "Content-type" : "application/json",
+            "X-Auth-Token" : "YWt1Y2hpbkBtYXh1cy5ydToxODA1QW5uOQ=="
+          };
+          fetchParams.headers;
           fetchParams.body = reqBody;
       }
 
@@ -47,8 +50,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
 
         const response = await api(url, method, body, headers);
 
-        console.log(response);
-
         if(response.status === statusCode) {
             result.success = true;
 
@@ -80,8 +81,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
         }
 
         result.responseBody = errorBody;
-
-        console.log(result);
 
         throw result;
     } catch (error) {

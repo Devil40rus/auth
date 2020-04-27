@@ -3,7 +3,7 @@ import { Router, Scene } from 'react-native-router-flux';
 
 import Login from '../pages/Login';
 import Profile from "../pages/Profile";
-import Home from '../pages/Home';
+import Navigator from '../pages/Navigator';
 
 export default class Routes extends Component<{}> {
 	render() {
@@ -15,7 +15,7 @@ export default class Routes extends Component<{}> {
 					</Scene>
 					<Scene key="app" hideNavBar={true} initial={this.props.isLoggedIn}>
 						<Scene key="profile" component={Profile} />
-						<Scene key="home" component={Home} />
+						<Scene key="navigator" component={Navigator} />
 					</Scene>
 				</Scene>
 			</Router>

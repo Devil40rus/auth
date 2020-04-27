@@ -44,7 +44,6 @@ const ButtonText = styled.Text`
 `;
 
 class Login extends Component<{}> {
-
   loginUser = async (values) => {
     try {
       const response =  await this.props.dispatch(loginUser(values));

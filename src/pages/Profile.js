@@ -4,8 +4,6 @@ import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components/native';
 import Onboarding from 'react-native-onboarding-swiper';
 
-import { logoutUser } from "../actions/auth.actions";
-
 const Avatar = styled.Image`
 	width: 300;
 	height: 300;
@@ -15,13 +13,23 @@ const Avatar = styled.Image`
 `;
 
 class Profile extends Component<{}> {
-  
-  home() {
-		Actions.home()
-	}
-  
-  logoutUser = () => {
-    this.props.dispatch(logoutUser());
+  constructor(props) {
+    super(props);
+    this.state = {
+      profile: '',
+    };
+  }
+ 
+  navigator() {
+		Actions.navigator()
+  }
+
+  componentDidMount() {
+    setInterval(function(){
+      this.setState({
+        profile: this.props.getUser.userDetails.person.firstname
+      })
+    }.bind(this));
   }
 
 	render() {
@@ -29,11 +37,12 @@ class Profile extends Component<{}> {
 
 		return(
       <Onboarding
+        reset={() => this.forceUpdate()}
         showNext={false}
         bottomBarColor={'#fff'}
         showSkip={false}
         onDone={() => {
-          {this.home()};
+          {this.navigator()};
         }}
         controlStatusBar={false}
         bottomBarHighlight={false}
@@ -41,7 +50,7 @@ class Profile extends Component<{}> {
           {
             backgroundColor: '#fff',
             image: <Avatar />,
-            title: `Привет, ${this.props.getUser.userDetails.person.firstname}`,
+            title: `Привет, ${this.state.profile}`,
             subtitle: 'Мы приветствуем тебя в нашем приложении для офлайн мероприятий',
             titleStyles: { color: '#4A2481' },
             subTitleStyles: { color: '#EA329A' }
@@ -63,11 +72,11 @@ class Profile extends Component<{}> {
 }
 
 mapStateToProps = (state) => ({
-    getUser: state.userReducer.getUser
+  getUser: state.userReducer.getUser
 });
 
 mapDispatchToProps = (dispatch) => ({
-    dispatch
+  dispatch
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

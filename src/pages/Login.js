@@ -3,7 +3,6 @@ import { Text, View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Field, reduxForm } from 'redux-form';
-import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components/native';
 
 import { loginUser } from "../actions/auth.actions";

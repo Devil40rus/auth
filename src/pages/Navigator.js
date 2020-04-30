@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Header } from 'react-native-elements';
-
 
 import NewsScreen from '../screens/NewsScreen';
 import TrainingScreen from '../screens/TrainingScreen';
@@ -23,41 +21,16 @@ class Navigator extends React.Component {
     render() {
         return (
             <NavigationContainer>
-                <Header
-                    rightComponent={{ icon: 'home', onPress: () => this.logoutUser()}}
-                    containerStyle={{
-                        backgroundColor: '#F4CB43'
-                    }}
-                />
                 <Tab.Navigator
                     barStyle={{ backgroundColor: '#F4CB43' }}
                     tabBarLabel={false}
                 >
                     <Tab.Screen
-                        name="Новости"
-                        component={NewsScreen}
+                        name="Главная"
+                        component={PersonScreen}
                         options={{
                             tabBarIcon: () => (
-                                <Icon size={25} name={'md-home'} />
-                            ),
-                        }}
-                        headerMode="none"
-                    />
-                    <Tab.Screen
-                        name="Событие"
-                        component={TrainingScreen}
-                        options={{
-                            tabBarIcon: () => (
-                                <Icon size={25} name={'md-school'} />
-                            ),
-                        }}
-                    />
-                    <Tab.Screen
-                        name="Календарь"
-                        component={CalendarScreen}
-                        options={{
-                            tabBarIcon: () => (
-                                <Icon size={25} name={'md-calendar'} />
+                                <Icon size={25} name={'ios-person'} />
                             ),
                         }}
                     />
@@ -71,13 +44,32 @@ class Navigator extends React.Component {
                         }}
                     />
                     <Tab.Screen
-                        name="Главная"
-                        component={PersonScreen}
+                        name="Календарь"
+                        component={CalendarScreen}
                         options={{
                             tabBarIcon: () => (
-                                <Icon size={25} name={'ios-person'} />
+                                <Icon size={25} name={'md-calendar'} />
                             ),
                         }}
+                    />
+                    <Tab.Screen
+                        name="Событие"
+                        component={TrainingScreen}
+                        options={{
+                            tabBarIcon: () => (
+                                <Icon size={25} name={'md-school'} />
+                            ),
+                        }}
+                    />
+                    <Tab.Screen
+                        name="Новости"
+                        component={NewsScreen}
+                        options={{
+                            tabBarIcon: () => (
+                                <Icon size={25} name={'md-home'} />
+                            ),
+                        }}
+                        headerMode="none"
                     />
                 </Tab.Navigator>
             </NavigationContainer>

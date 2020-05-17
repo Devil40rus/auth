@@ -1,4 +1,4 @@
-const BASE_URL = "http://devapi.sdo.maxus.ru";
+const BASE_URL = "https://sdoapi.home.svyaznoy.ru";
 
 export const api = async (url, method, body = null, headers = {}) => {
 
@@ -15,7 +15,7 @@ export const api = async (url, method, body = null, headers = {}) => {
       if(reqBody) {
           fetchParams.headers = {
             "Content-type" : "application/json",
-            "X-Auth-Token" : "YWt1Y2hpbkBtYXh1cy5ydToxODA1QW5uOQ=="
+            "X-Auth-Token" : "Mjc3NzUxMTY6MTgwNUFubjk="
           };
           fetchParams.headers;
           fetchParams.body = reqBody;

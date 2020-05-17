@@ -51,14 +51,16 @@ const cards = [
     image: 'https://images.unsplash.com/photo-1494252713559-f26b4bf0b174?w=840&q=300',
     avatar: 'http://i.pravatar.cc/100',
     title: 'Christopher Moon',
-    caption: '138 minutes ago'
+    caption: '138 minutes ago',
+    padded: true,
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1503631285924-e1544dce8b28?&w=1200&h=1600&fit=crop&crop=entropy&q=300',
     avatar: 'http://i.pravatar.cc/100',
     title: 'Christopher Moon',
-    caption: '138 minutes ago'
+    caption: '138 minutes ago',
+    padded: true,
   },
   {
     id: 3,

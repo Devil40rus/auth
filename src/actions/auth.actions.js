@@ -21,7 +21,7 @@ export const loginUser = (payload) => {
                 type: "GET_USER_SUCCESS",
                 payload: response.responseBody
             });
-            return response;
+            return response
           } else {
             throw response;
           }

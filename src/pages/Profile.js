@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from 'react-native-router-flux';
 import styled from 'styled-components/native';
@@ -49,7 +50,7 @@ class Profile extends Component<{}> {
         pages={[
           {
             backgroundColor: '#fff',
-            image: <Avatar />,
+            image: <Avatar source={{uri: `https://mc.svyaznoy.ru/api_5/avatar/big/${this.props.getUser.userDetails.person.tabNumber}`}} />,
             title: `Привет, ${this.state.profile}`,
             subtitle: 'Мы приветствуем тебя в нашем приложении для офлайн мероприятий',
             titleStyles: { color: '#4A2481' },

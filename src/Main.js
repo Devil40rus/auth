@@ -16,10 +16,10 @@ class Main extends Component<{}> {
         <StatusBar
           backgroundColor="#1c313a"
           barStyle="light-content"
-         />
+        />
         <Routes isLoggedIn={isLoggedIn} />
       </View>
-		)
+  )
 	}
 }
 

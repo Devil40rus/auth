@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,14 +10,9 @@ import CalendarScreen from '../screens/CalendarScreen';
 import ChatScreen from '../screens/ChatScreen';
 import PersonScreen from '../screens/PersonScreen';
 
-import {logoutUser} from "../actions/auth.actions";
-
 const Tab = createMaterialBottomTabNavigator();
 
 class Navigator extends React.Component {
-    logoutUser = () => {
-        this.props.dispatch(logoutUser());
-    }
     render() {
         return (
             <NavigationContainer>

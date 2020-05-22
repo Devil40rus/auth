@@ -1,169 +1,218 @@
-import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Dimensions, Text, Image, TouchableOpacity } from 'react-native';
-import { Block, Card } from 'galio-framework';
+import React, { Component } from 'react'
+import { StyleSheet, Text, ActivityIndicator } from 'react-native';
+import { FloatingAction } from "react-native-floating-action";
+
+import { Block } from 'galio-framework';
 
 import { connect } from "react-redux";
 
-import { logoutUser } from "../actions/auth.actions";
-
-import Constants from 'expo-constants';
-import theme from '../theme';
-
 import { getData } from '../config/index';
 
-const { statusBarHeight } = Constants;
-const { width } = Dimensions.get('screen');
+import theme from '../theme';
 
 const styles = StyleSheet.create({
-  header: {
-    paddingVertical: theme.SIZES.BASE * 2,
-    paddingHorizontal: theme.SIZES.BASE * 1.5,
-    width,
+  container: {
+    flex: 1,
+    justifyContent: 'space-between'
   },
-  navbar: {
-    top: statusBarHeight,
-    left: 0,
-    right: 0,
-    zIndex: 9999,
-    position: 'absolute',
-  },
-  stats: {
-    borderWidth: 0,
-    width: width - theme.SIZES.BASE * 2,
-    height: theme.SIZES.BASE * 4,
-    marginVertical: theme.SIZES.BASE * 0.875,
-  },
-  title: {
+  content: {
+    flex: 1,
     justifyContent: 'center',
-    paddingLeft: theme.SIZES.BASE / 2,
+    marginTop: theme.SIZES.BASE * 2
   },
-  avatar: {
-    width: theme.SIZES.BASE * 4,
-    height: theme.SIZES.BASE * 4,
-    borderRadius: theme.SIZES.BASE * 1.25,
+  profileBlock: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
-  middle: {
-    justifyContent: 'center',
+  profileImage: {
+    backgroundColor: '#fff',
+    width: 60,
+    height: 60,
+    borderRadius: 200,
+    overflow: "hidden"
   },
-  text: {
-    fontSize: theme.SIZES.FONT * 0.875,
-    lineHeight: theme.SIZES.FONT * 1.25,
-  },
-  cards: {
-    width,
-    backgroundColor: theme.COLORS.WHITE,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  valuesTraining: {
+    color: "#4A2481"
   },
   card: {
     backgroundColor: theme.COLORS.WHITE,
     borderRadius: 7,
     marginVertical: theme.SIZES.BASE * 0.600,
     padding: 15,
+    marginTop: theme.SIZES.BASE * 2,
     height: 100,
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  full: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    left: 0,
-  },
-  noRadius: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  rounded: {
-    borderRadius: theme.SIZES.BASE * 0.1875,
-  },
-  gradient: {
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 90,
-    position: 'absolute',
-    overflow: 'hidden',
-    borderBottomRightRadius: theme.SIZES.BASE * 0.5,
-    borderBottomLeftRadius: theme.SIZES.BASE * 0.5,
+  loader: {
+    flex: 1,
+    justifyContent: 'center'
   }
 });
 
-class PersonScreen extends Component<{}> {
+const actions = [
+  {
+    text: "Присутствие",
+    icon: require("../../assets/icons/presence.png"),
+    name: "bt_presence",
+    position: 1
+  },
+  {
+    text: "Тест",
+    icon: require("../../assets/icons/test.png"),
+    name: "bt_text",
+    position: 2
+  },
+  {
+    text: "Опрос",
+    icon: require("../../assets/icons/poll.png"),
+    name: "bt_poll",
+    position: 3
+  },
+  {
+    text: "Оценки",
+    icon: require("../../assets/icons/assessments.png"),
+    name: "bt_assessments",
+    position: 4
+  },
+  {
+    text: "Вопросы",
+    icon: require("../../assets/icons/questions.png"),
+    name: "bt_questions",
+    position: 4
+  }
+];
+
+class TrainingScreen extends Component {
   constructor(props) {
     super(props);
-    this.state= {
-      events: [],
+    this.state = {
+      visible: true,
+      oEvent: Object()
     };
   }
 
-  navToEvent( eventID ) {
-    this.props.navigation.navigate('Событие', { event: eventID} );
+  getNavParams(){
+    return this.props.navigation.state.params.id
   }
 
-  componentWillMount() {
+  async getEventData(){
+    let eventQuery = ``;
+    
+    getData( eventQuery, ( data ) => this.setState({
+      oEvent: data.event
+    }));
+  }
+
+  getEvent() {
+    return this.state.oEvent.id ? this.state.oEvent : null;
+  }
+
+  getEventLector() {
+    return ( this.getEvent() && this.getEvent().lector )  ? this.getEvent().lector.person : null
+  }
+
+  getEventPlace(){
+    return ( this.getEvent() && this.getEvent.place ) ? this.getEvent().place : null
+  }
+
+  componentDidMount() {
     this._loadInitialState().done();
   }
 
   _loadInitialState = async () => {
-    let eventsQuery = `{
-      events(studentID: "6631630712433484809"){
-        event{
-          id,
-          name,
-          startDate,
-          place{
-            name
-          },
-          lector{
-            person{
-              fullname,
-            },
-          },
-        },
-        isAssist,
-      }
-    }`;
-    getData( eventsQuery, ( data ) => this.setState({
-      events: data.events
-    }))
+    this.props.navigation.addListener('willBlur',( event )=>{
+      this.state.oEvent = Object();
+    })
   }
 
-  logoutUser = () => {
-    this.props.dispatch(logoutUser());
+  loader(){
+    return (
+      <Block style={styles.loader}>
+        <ActivityIndicator
+          size="large"
+          color="#EA329A"
+        />
+      </Block>
+    )
   }
-	render() {
+
+  render() {
     const {getUser: {userDetails}} = this.props;
     const {authData: {isLoggedIn}} = this.props;
-    console.log(this.state.events);
-
-	  return(
-      <Block>
-        <Block center style={{ marginTop: theme.SIZES.BASE * 2 }}>
-          <Block style={styles.header}>
-            <ScrollView>
-              {this.state.events.map((value) => (
-                <TouchableOpacity onPress={() => this.navToEvent( value.event.id ) } key={value.event.id}
-                  key={value.event.id}
-                  style={styles.card}
-                >
-                  <Block style={{justifyContent: 'space-between'}}>
-                    <Text style={{ color: "#EA329A", width: 250, fontWeight: 'bold', fontSize: '13' }}>{value.event.name}</Text>
-                      {value.event.lector != null && <Text style={{ color: "#4A2481", fontSize: '11'}}>Тренер: {value.event.lector.person.fullname}</Text>}
-                    <Text  ext style={{ color: "#4A2481", fontSize: '11' }}>Старт: {value.event.startDate}</Text>
+    console.log('------');
+    console.log(this.state);
+    console.log('------');
+    if (
+      !this.getNavParams() 
+      || !this.getNavParams().event
+    ) {
+      this.props.navigation.navigate('Главная');
+    }
+    if (
+      !this.getEvent()
+    ) {
+      this.getEventData();
+      return this.loader();
+    }
+    return (
+      <Block style={styles.container}>
+        <Block style={{ padding: 30 }}>
+          <Block key={this.getEvent().id}>
+            <Block>
+              <Text
+                style={{
+                  color: "#4A2481",
+                  fontSize: 17,
+                  textAlign: "center",
+                  width: 300
+                }}>{this.getEvent().name}</Text>
+            </Block>
+            <Block>
+              <Block
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 30
+                }}>
+                <Block style={styles.profileImage} />
+                <Block
+                  style={{
+                    marginLeft: 14,
+                    justifyContent: "center"
+                  }}>
+                  <Block style={{ color: "#EA329A" }}>
+                    <Text style={{ color: "#EA329A" }}>Тренер: <Text style={{ fontSize: 14, fontWeight: "bold" }}>{this.getEventLector() ? this.getEventLector().firstname + " " + this.getEventLector().lastname : 'Нет данных'}</Text></Text>
                   </Block>
-                  <Block style={{justifyContent: 'center'}}>
-                    <Image style={{width: 20, height: 20}} source={require('../../assets/vector.png')} />
+                  <Block>
+                    <Text style={styles.valuesTraining}>Старт: <Text style={{ fontWeight: "bold" }}>{this.getEvent().startDate}</Text>
+                    </Text>
                   </Block>
-                </TouchableOpacity>
-              ))}
-              <Block>
+                  <Block>
+                    <Text style={styles.valuesTraining}>Место: <Text style={{ fontWeight: "bold" }}>{this.getEventPlace() ? this.getEventPlace() : 'Нет данных'}</Text>
+                    </Text>
+                  </Block>
+                </Block>
               </Block>
-            </ScrollView>
+              <Block style={styles.card}></Block>
+              <Block style={styles.card}></Block>
+              <Block style={styles.card}></Block>
+            </Block>
           </Block>
         </Block>
+        <Block>
+          <FloatingAction
+            animated={true}
+            position={"right"}
+            color={"#4A2481"}
+            overlayColor={"none"}
+            actions={actions}
+            textBackground={"#4A2481"}
+            textColor={"#4A2481"}
+          />
+        </Block>
       </Block>
-    );
+    )
   }
 }
 
@@ -176,4 +225,4 @@ mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(TrainingScreen);

@@ -1,4 +1,4 @@
-const BASE_URL = "https://sdoapi.home.svyaznoy.ru";
+const BASE_URL = "";
 
 export const api = async (url, method, body = null, headers = {}) => {
 
@@ -15,7 +15,7 @@ export const api = async (url, method, body = null, headers = {}) => {
       if(reqBody) {
           fetchParams.headers = {
             "Content-type" : "application/json",
-            "X-Auth-Token" : "Mjc3NzUxMTY6MTgwNUFubjk="
+            "X-Auth-Token" : ""
           };
           fetchParams.headers;
           fetchParams.body = reqBody;

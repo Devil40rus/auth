@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, Dimensions, Text, Image, TouchableOpacity } from 'react-native';
-import { Block, Card } from 'galio-framework';
+import { Block, Card, Button } from 'galio-framework';
 
 import { connect } from "react-redux";
 
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   stats: {
     borderWidth: 0,
     width: width - theme.SIZES.BASE * 2,
+    marginLeft: -10,
     height: theme.SIZES.BASE * 4,
     marginVertical: theme.SIZES.BASE * 0.875,
   },
@@ -139,36 +140,50 @@ class PersonScreen extends Component<{}> {
 
 	  return(
       <Block>
-        <Block center style={{ marginTop: theme.SIZES.BASE * 2 }}>
-          <Block style={styles.header}>
+        <Block style={{ marginTop: theme.SIZES.BASE * 3 }}>
+          <Block style={{ alignSelf: 'flex-end', marginRight: 20, zIndex: 999 }}>
+            <Button
+              onlyIcon
+              icon="home"
+              iconFamily="antdesign"
+              iconSize={20}
+              color="#F4CB43"
+              iconColor="#4A2481"
+              style={{ width: 35, height: 35 }}
+              onPress={this.logoutUser}
+            />
+          </Block>
+          <Block center style={{ marginTop: -60 }}>
             <Block>
-              <Card
-                borderless
-                style={styles.stats}
-                title={this.props.getUser.userDetails.person.fullname}
-                caption={this.props.getUser.userDetails.person.positionName}
-                avatar={`https://mc.svyaznoy.ru/api_5/avatar/big/${this.props.getUser.userDetails.person.tabNumber}`}
-              ></Card>
-            </Block>
-            <ScrollView>
-              {this.state.events.map((value) => (
-                <TouchableOpacity onPress={() => this.navToEvent( value.event.id ) } key={value.event.id}
-                  key={value.event.id}
-                  style={styles.card}
-                >
-                  <Block style={{justifyContent: 'space-between'}}>
-                    <Text style={{ color: "#EA329A", width: 250, fontWeight: 'bold', fontSize: '13' }}>{value.event.name}</Text>
-                    <Text  ext style={{ color: "#4A2481", fontSize: '11' }}>Старт: {value.event.startDate}</Text>
-                      {value.event.lector != null && <Text style={{ color: "#4A2481", fontSize: '11'}}>Тренер: {value.event.lector.person.fullname}</Text>}
-                  </Block>
-                  <Block style={{justifyContent: 'center'}}>
-                    <Image style={{width: 20, height: 20}} source={require('../../assets/vector.png')} />
-                  </Block>
-                </TouchableOpacity>
-              ))}
               <Block>
+                <Card
+                  borderless
+                  style={styles.stats}
+                  title={this.props.getUser.userDetails.person.fullname}
+                  caption={this.props.getUser.userDetails.person.positionName}
+                  avatar={`https://mc.svyaznoy.ru/api_5/avatar/big/${this.props.getUser.userDetails.person.tabNumber}`}
+                ></Card>
               </Block>
-            </ScrollView>
+              <ScrollView>
+                {this.state.events.map((value) => (
+                  <TouchableOpacity onPress={() => this.navToEvent( value.event.id ) } key={value.event.id}
+                    key={value.event.id}
+                    style={styles.card}
+                  >
+                    <Block style={{justifyContent: 'space-between'}}>
+                      <Text style={{ color: "#EA329A", width: 250, fontWeight: 'bold', fontSize: '13' }}>{value.event.name}</Text>
+                      <Text  ext style={{ color: "#4A2481", fontSize: '11' }}>Старт: {value.event.startDate}</Text>
+                        {value.event.lector != null && <Text style={{ color: "#4A2481", fontSize: '11'}}>Тренер: {value.event.lector.person.fullname}</Text>}
+                    </Block>
+                    <Block style={{justifyContent: 'center'}}>
+                      <Image style={{width: 20, height: 20}} source={require('../../assets/vector.png')} />
+                    </Block>
+                  </TouchableOpacity>
+                ))}
+                <Block>
+                </Block>
+              </ScrollView>
+            </Block>
           </Block>
         </Block>
       </Block>

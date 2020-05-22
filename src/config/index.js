@@ -1,7 +1,7 @@
 export function getData( gql, callback ) {
-  let URL = 'https://sdoapi.home.svyaznoy.ru/api';
-  let Token = '0da52ff314e6e100d9b09f5782bf40da';
-  let RefToken = '490dd5dceb956e8805200394c7861734';
+  let URL = '';
+  let Token = '';
+  let RefToken = '';
 
   fetch(URL, {
     method: 'POST',

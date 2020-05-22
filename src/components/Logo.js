@@ -12,7 +12,7 @@ export default class Logo extends Component<{}> {
 	render(){
 		return(
 			<Container>
-				<Image source={require('../images/logo.png')} />
+				<Image source={require('')} />
   			</Container>
 			)
 	}
